@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.viewmodel_android_h1.MyViewModel.InputField
 import com.example.viewmodel_android_h1.MyViewModel.MyApp
+
 import com.example.viewmodel_android_h1.ui.theme.ViewModelAndroidH1Theme
 
 class MainActivity : ComponentActivity() {
@@ -18,7 +19,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-           MyApp()
+            MyApp()
         }
     }
 }

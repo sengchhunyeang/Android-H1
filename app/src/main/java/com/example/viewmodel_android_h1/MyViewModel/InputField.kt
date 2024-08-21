@@ -38,85 +38,73 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun InputField() {
     val viewModel: MyViewModel = viewModel()
-    var inputText1 by remember { mutableStateOf(viewModel.inputText.value) }
-    var inputText2 by remember { mutableStateOf(viewModel.inputText.value) }
-    var inputText3 by remember { mutableStateOf(viewModel.inputText.value) }
-    var inputText4 by remember { mutableStateOf(viewModel.inputText.value) }
-    val isAnyInputEmpty=inputText1.isEmpty()||inputText2.isEmpty()||inputText3.isEmpty()||inputText4.isEmpty()
-    OutlinedTextField(
-        value = inputText1,
+    val userInputState by viewModel.userInputState
+
+    val isAnyInputEmpty =
+        userInputState.fullName.isEmpty() || userInputState.gender.isEmpty() || userInputState.phone.isEmpty() || userInputState.address.isEmpty()
+    OutlinedTextField(value = userInputState.fullName,
         onValueChange = { newInputText ->
-            viewModel.onInputTextChange(newInputText)
-            inputText1 = newInputText
+            viewModel.onInputTextState(newInputText, "fullName")
         },
         modifier = Modifier
             .fillMaxWidth()
             .padding(start = 16.dp, end = 16.dp),
         label = { Text("Full Name") },
-        placeholder = { Text(text = "Chhunyeang")}
-    )
+        placeholder = { Text(text = "Chhunyeang") })
 
 
 
     Row(modifier = Modifier.fillMaxWidth()) {
         OutlinedTextField(
-            value = inputText2,
+            value = userInputState.gender,
             onValueChange = { newInputText ->
-                viewModel.onInputTextChange2(newInputText)
-                inputText2 = newInputText
+                viewModel.onInputTextState(newInputText, "gender")
             },
             modifier = Modifier
                 .weight(1f)
                 .padding(start = 16.dp, end = 10.dp),
-            label = { Text("Gender") }, placeholder = { Text(text = "Male")},
+            label = { Text("Gender") },
+            placeholder = { Text(text = "Male") },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
         )
         OutlinedTextField(
-            value = inputText3,
+            value = userInputState.phone,
             onValueChange = { newInputText ->
-                viewModel.onInputTextChange3(newInputText)
-                inputText3 = newInputText
+                viewModel.onInputTextState(newInputText, "phone")
             },
             modifier = Modifier
                 .weight(2f)
                 .padding(start = 1.dp, end = 16.dp),
-
-            label = { Text("Phone ") },
-            placeholder = { Text(text = "0963042761")},
+            label = { Text("Phone") },
+            placeholder = { Text(text = "0963042761") },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
         )
     }
     Row(modifier = Modifier.padding(start = 16.dp, end = 16.dp)) {
-        OutlinedTextField(
-            value = inputText4,
+        OutlinedTextField(value = userInputState.address,
             onValueChange = { newInputText ->
-                viewModel.onInputTextChange3(newInputText)
-                inputText4 = newInputText
+                viewModel.onInputTextState(newInputText, "address")
             },
-            modifier = Modifier
-                .fillMaxWidth(),
+            modifier = Modifier.fillMaxWidth(),
             label = { Text("Address") },
-            placeholder = {
-                Text(text = "PP")
-            }
-        )
+            placeholder = { Text(text = "PP") })
     }
-    Row(modifier = Modifier.padding(10.dp)
-        , horizontalArrangement = Arrangement.Center
-        , verticalAlignment = Alignment.CenterVertically
-    ){
-        Button(onClick = { /*TODO*/ },
-            modifier = Modifier.fillMaxWidth()
-                ,
+    Row(
+        modifier = Modifier.padding(10.dp),
+        horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Button(
+            onClick = { /*TODO*/ },
+            modifier = Modifier.fillMaxWidth(),
             colors = ButtonDefaults.buttonColors(
-                containerColor = if(isAnyInputEmpty) Color.Gray else Color.Blue,
+                containerColor = if (isAnyInputEmpty) Color.Gray else Color.Blue,
 
-            )
+                )
         ) {
             Text("Submit")
         }
     }
-
 }
 
 @Composable
@@ -128,9 +116,7 @@ fun MyApp() {
     ) {
         Row(modifier = Modifier.padding(top = 30.dp, start = 16.dp, end = 16.dp)) {
             Text(
-                text = "Register Information",
-                fontWeight = FontWeight.Bold,
-                fontSize = 25.sp
+                text = "Register Information", fontWeight = FontWeight.Bold, fontSize = 25.sp
             )
             Spacer(modifier = Modifier.weight(0.1f))
             Icon(imageVector = Icons.Default.AccountCircle, contentDescription = "UserImage")
