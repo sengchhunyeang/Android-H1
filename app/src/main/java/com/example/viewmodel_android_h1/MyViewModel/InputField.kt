@@ -81,6 +81,7 @@ fun InputField() {
         Button(
             onClick = { /*TODO*/ },
             modifier = Modifier.fillMaxWidth(),
+            enabled = !isAnyInputEmpty,
             colors = ButtonDefaults.buttonColors(
                 containerColor = if (isAnyInputEmpty) Color.Gray else Color.Blue,
 
